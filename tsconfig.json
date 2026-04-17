@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "target": "ES6",                          /* Versión de JS de salida [cite: 347, 355] */
+    "module": "ESNext",                       /* Sistema de módulos para el navegador */
+    "rootDir": "./src",                       /* Carpeta de entrada .ts [cite: 351, 357] */
+    "outDir": "./dist",                       /* Carpeta de salida .js [cite: 350, 356] */
+    "strict": true,                           /* Activa validaciones fuertes [cite: 352, 358] */
+    "esModuleInterop": true,                  /* Compatibilidad con módulos [cite: 353] */
+    "skipLibCheck": true,                     /* Omite revisión de librerías externas [cite: 362] */
+    "lib": ["ES6", "DOM"]                     /* Necesario para manipular el DOM [cite: 18, 170] */
+  },
+  "include": ["src/**/*"]                     /* Indica qué archivos compilar */
+}
