@@ -1,0 +1,1 @@
+# -SistemadeGestionAcad-mica_FrontendconTypeScript
