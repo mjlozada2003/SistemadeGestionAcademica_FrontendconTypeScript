@@ -2,33 +2,107 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Gestión Académica</title>
+    <title>Gestión Académica UCB</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>Sistema de Gestión Académica</h1>
-    
-    <section id="stats">
-        <h3>Estadísticas</h3>
-        <p>Total Estudiantes: <span id="stat-est">0</span></p>
-    </section>
+    <div class="container">
+        <h1>Sistema de Gestión Académica</h1>
+        
+        <section class="stats-container">
+            <div class="stat-card"><h3>Total Estudiantes</h3><p id="stat-est">0</p></div>
+            <div class="stat-card"><h3>Estudiantes Activos</h3><p id="stat-est-activos">0</p></div>
+            <div class="stat-card"><h3>Total Cursos</h3><p id="stat-cur">0</p></div>
+            <div class="stat-card"><h3>Cursos Cerrados</h3><p id="stat-cur-cerrados">0</p></div>
+            <div class="stat-card"><h3>Total Inscripciones</h3><p id="stat-ins">0</p></div>
+            <div class="stat-card"><h3>Curso más popular</h3><p id="stat-top-cur" style="font-size: 1.2em;">-</p></div>
+        </section>
 
-    <section id="form-est">
-        <h3>Registrar Estudiante</h3>
-        <form id="est-form">
-            <input type="text" id="est-nombre" placeholder="Nombre completo" required>
-            <input type="email" id="est-correo" placeholder="Correo" required>
-            <input type="number" id="est-edad" placeholder="Edad" required>
-            <input type="text" id="est-carrera" placeholder="Carrera" required>
-            <button type="submit">Registrar</button>
-        </form>
-    </section>
+        <nav class="tabs">
+            <button class="tab-btn active" data-target="estudiantes">Estudiantes</button>
+            <button class="tab-btn" data-target="cursos">Cursos</button>
+            <button class="tab-btn" data-target="inscripciones">Inscripciones</button>
+            <button class="tab-btn" data-target="relaciones">Relaciones</button>
+        </nav>
 
-    <table>
-        <thead><tr><th>Nombre</th><th>Correo</th><th>Estado</th><th>Acción</th></tr></thead>
-        <tbody id="tabla-estudiantes"></tbody>
-    </table>
+        <section id="tab-estudiantes" class="tab-content active">
+            <div class="filtros">
+                <input type="text" id="filtro-est-nombre" placeholder="🔍 Buscar por nombre...">
+                <select id="filtro-est-estado">
+                    <option value="todos">Todos los estados</option>
+                    <option value="activo">Activos</option>
+                    <option value="inactivo">Inactivos</option>
+                </select>
+            </div>
+            <form id="est-form">
+                <input type="hidden" id="est-id">
+                <input type="text" id="est-nombre" placeholder="Nombre completo" required>
+                <input type="email" id="est-correo" placeholder="Correo" required>
+                <input type="number" id="est-edad" placeholder="Edad" required min="16">
+                <input type="text" id="est-carrera" placeholder="Carrera" required>
+                <button type="submit" id="btn-est-submit">Guardar Estudiante</button>
+            </form>
+            <table>
+                <thead><tr><th>Nombre</th><th>Correo</th><th>Carrera</th><th>Estado</th><th>Acciones</th></tr></thead>
+                <tbody id="tabla-estudiantes"></tbody>
+            </table>
+        </section>
 
+        <section id="tab-cursos" class="tab-content">
+            <div class="filtros">
+                <input type="text" id="filtro-cur-nombre" placeholder="🔍 Buscar por nombre o sigla...">
+                <select id="filtro-cur-estado">
+                    <option value="todos">Todos los estados</option>
+                    <option value="disponible">Disponibles</option>
+                    <option value="cerrado">Cerrados</option>
+                </select>
+            </div>
+            <form id="cur-form">
+                <input type="hidden" id="cur-id">
+                <input type="text" id="cur-nombre" placeholder="Nombre del curso" required>
+                <input type="text" id="cur-sigla" placeholder="Sigla (ej: INF-121)" required>
+                <input type="text" id="cur-docente" placeholder="Docente" required>
+                <input type="number" id="cur-cupo" placeholder="Cupo máximo" required min="1">
+                <button type="submit" id="btn-cur-submit">Guardar Curso</button>
+            </form>
+            <table>
+                <thead><tr><th>Sigla</th><th>Nombre</th><th>Cupo</th><th>Estado</th><th>Acciones</th></tr></thead>
+                <tbody id="tabla-cursos"></tbody>
+            </table>
+        </section>
+
+        <section id="tab-inscripciones" class="tab-content">
+            <form id="ins-form">
+                <select id="ins-estudiante" required><option value="">Seleccione Estudiante...</option></select>
+                <select id="ins-curso" required><option value="">Seleccione Curso...</option></select>
+                <button type="submit">Inscribir</button>
+            </form>
+            <table>
+                <thead><tr><th>Fecha</th><th>Estudiante</th><th>Curso</th><th>Estado</th></tr></thead>
+                <tbody id="tabla-inscripciones"></tbody>
+            </table>
+        </section>
+
+        <section id="tab-relaciones" class="tab-content">
+            <h3>Ver Inscritos por Curso</h3>
+            <select id="rel-curso-select"><option value="">Seleccione un curso...</option></select>
+            <ul id="rel-curso-lista"></ul>
+
+            <h3>Ver Cursos por Estudiante</h3>
+            <select id="rel-est-select"><option value="">Seleccione un estudiante...</option></select>
+            <ul id="rel-est-lista"></ul>
+        </section>
+    </div>
+
+    <script>
+        // Lógica simple para pestañas
+        function showTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById('tab-' + tabId).classList.add('active');
+            event.currentTarget.classList.add('active');
+        }
+    </script>
     <script type="module" src="./dist/app.js"></script>
 </body>
 </html>

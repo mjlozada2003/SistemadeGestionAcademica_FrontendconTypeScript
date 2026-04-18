@@ -1,7 +1,7 @@
-import { Inscripcion } from "../models/inscripcion";
-import { EstudianteService } from "./estudiante.service";
-import { CursoService } from "./curso.service";
-import { StorageUtil } from "../utils/storage";
+import { Inscripcion } from "../models/inscripcion.js";
+import { EstudianteService } from "./estudiante.service.js";
+import { CursoService } from "./curso.service.js";
+import { StorageUtil } from "../utils/storage.js";
 
 export class InscripcionService {
     private inscripciones: Inscripcion[] = StorageUtil.get<Inscripcion>("inscripciones");

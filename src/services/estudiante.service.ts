@@ -1,5 +1,5 @@
-import { Estudiante } from "../models/estudiante";
-import { StorageUtil } from "../utils/storage";
+import { Estudiante } from "../models/estudiante.js";
+import { StorageUtil } from "../utils/storage.js";
 
 export class EstudianteService {
     private estudiantes: Estudiante[] = StorageUtil.get<Estudiante>("estudiantes");
@@ -23,6 +23,14 @@ export class EstudianteService {
     delete(id: number): void {
         this.estudiantes = this.estudiantes.filter(e => e.id !== id);
         this.save();
+    }
+    
+    toggleEstado(id: number): void {
+        const est = this.estudiantes.find(e => e.id === id);
+        if (est) {
+            est.estado = est.estado === "activo" ? "inactivo" : "activo";
+            this.save();
+        }
     }
 
     private save() { StorageUtil.save("estudiantes", this.estudiantes); }

@@ -1,4 +1,4 @@
-import { StorageUtil } from "../utils/storage";
+import { StorageUtil } from "../utils/storage.js";
 export class InscripcionService {
     constructor(estService, cursoService) {
         this.estService = estService;

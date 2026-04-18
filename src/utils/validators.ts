@@ -5,4 +5,7 @@ export class Validators {
     static isNotEmpty(value: string | number): boolean {
         return value.toString().trim() !== "";
     }
+    static isPositiveNumber(value: number): boolean {
+        return value > 0;
+    }
 }

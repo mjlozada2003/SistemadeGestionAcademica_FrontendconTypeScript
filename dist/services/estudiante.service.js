@@ -1,4 +1,4 @@
-import { StorageUtil } from "../utils/storage";
+import { StorageUtil } from "../utils/storage.js";
 export class EstudianteService {
     constructor() {
         this.estudiantes = StorageUtil.get("estudiantes");
@@ -20,6 +20,13 @@ export class EstudianteService {
     delete(id) {
         this.estudiantes = this.estudiantes.filter(e => e.id !== id);
         this.save();
+    }
+    toggleEstado(id) {
+        const est = this.estudiantes.find(e => e.id === id);
+        if (est) {
+            est.estado = est.estado === "activo" ? "inactivo" : "activo";
+            this.save();
+        }
     }
     save() { StorageUtil.save("estudiantes", this.estudiantes); }
 }
