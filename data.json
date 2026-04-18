@@ -1,0 +1,10 @@
+{
+  "estudiantes": [
+    { "id": 1, "nombre": "Ana López", "correo": "ana@ucb.edu.bo", "edad": 20, "carrera": "Sistemas", "estado": "activo" },
+    { "id": 2, "nombre": "Carlos Ruiz", "correo": "carlos@ucb.edu.bo", "edad": 22, "carrera": "Mecatrónica", "estado": "activo" }
+  ],
+  "cursos": [
+    { "id": 101, "nombre": "Programación Web II", "sigla": "SIS-222", "docente": "Ing. Quezada", "cupoMaximo": 30, "estado": "disponible" },
+    { "id": 102, "nombre": "Bases de Datos", "sigla": "SIS-111", "docente": "Ing. Pérez", "cupoMaximo": 25, "estado": "disponible" }
+  ]
+}

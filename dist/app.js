@@ -1,3 +1,12 @@
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l;
 import { EstudianteService } from "./services/estudiante.service.js";
 import { CursoService } from "./services/curso.service.js";
@@ -227,8 +236,30 @@ document.querySelectorAll(".tab-btn").forEach(btn => {
         e.target.classList.add("active");
     });
 });
-// Inicio
-renderAll();
+// ==========================================
+// PUNTOS EXTRA: FETCH DATA JSON
+// ==========================================
+const inicializarSistema = () => __awaiter(void 0, void 0, void 0, function* () {
+    // Solo carga el JSON si el localStorage está completamente vacío
+    if (estService.getAll().length === 0 && curService.getAll().length === 0) {
+        try {
+            const response = yield fetch('./data.json');
+            if (!response.ok)
+                throw new Error("No se pudo cargar el JSON");
+            const data = yield response.json();
+            // Insertamos los datos usando los servicios para aprovechar las validaciones
+            data.estudiantes.forEach((est) => estService.add(est));
+            data.cursos.forEach((cur) => curService.add(cur));
+            console.log("Datos iniciales cargados con éxito desde JSON.");
+        }
+        catch (error) {
+            console.warn("Aviso: No se cargaron datos iniciales.", error);
+        }
+    }
+    renderAll(); // Dibuja la interfaz después de intentar cargar
+});
+// Arrancar el sistema
+inicializarSistema();
 // ==========================================
 // MODO OSCURO (DARK MODE)
 // ==========================================

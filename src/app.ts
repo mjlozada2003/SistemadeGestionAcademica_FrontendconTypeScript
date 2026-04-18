@@ -245,8 +245,32 @@ document.querySelectorAll(".tab-btn").forEach(btn => {
     });
 });
 
-// Inicio
-renderAll();
+// ==========================================
+// PUNTOS EXTRA: FETCH DATA JSON
+// ==========================================
+const inicializarSistema = async () => {
+    // Solo carga el JSON si el localStorage está completamente vacío
+    if (estService.getAll().length === 0 && curService.getAll().length === 0) {
+        try {
+            const response = await fetch('./data.json');
+            if (!response.ok) throw new Error("No se pudo cargar el JSON");
+            
+            const data = await response.json();
+            
+            // Insertamos los datos usando los servicios para aprovechar las validaciones
+            data.estudiantes.forEach((est: any) => estService.add(est));
+            data.cursos.forEach((cur: any) => curService.add(cur));
+            
+            console.log("Datos iniciales cargados con éxito desde JSON.");
+        } catch (error) {
+            console.warn("Aviso: No se cargaron datos iniciales.", error);
+        }
+    }
+    renderAll(); // Dibuja la interfaz después de intentar cargar
+};
+
+// Arrancar el sistema
+inicializarSistema();
 
 // ==========================================
 // MODO OSCURO (DARK MODE)
