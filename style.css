@@ -1,151 +1,249 @@
+/* Tu paleta actual (Light Mode) se queda igual */
 :root {
-    --primary-color: #2c3e50;
-    --secondary-color: #34495e;
-    --accent-color: #3498db;
-    --success-color: #27ae60;
-    --danger-color: #e74c3c;
-    --info-color: #2980b9;
-    --bg-light: #f4f7f6;
-    --text-dark: #333;
+    --primary-color: #4f46e5;
+    --primary-hover: #4338ca;
+    --secondary-color: #1e293b;
+    --accent-color: #0ea5e9;
+    --success-color: #10b981;
+    --danger-color: #ef4444;
+    --warning-color: #f59e0b;
+    --bg-main: #f8fafc;
+    --bg-card: #ffffff;
+    --text-main: #334155;
+    --border-color: #e2e8f0;
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
+    --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1);
+    --radius: 8px;
+}
+
+/* NUEVO: Paleta Dark Mode */
+[data-theme="dark"] {
+    --primary-color: #6366f1; /* Índigo un poco más brillante para destacar en fondo oscuro */
+    --primary-hover: #818cf8;
+    --secondary-color: #0f172a; /* Azul muy oscuro para cabeceras */
+    --bg-main: #020617;       /* Fondo general casi negro */
+    --bg-card: #0f172a;       /* Fondo de las tarjetas/tablas */
+    --text-main: #f8fafc;     /* Texto blanco/grisáceo */
+    --border-color: #334155;  /* Bordes más sutiles */
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.5);
+    --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.5);
+}
+
+/* Pequeño ajuste para que los inputs se vean bien en modo oscuro */
+[data-theme="dark"] input, 
+[data-theme="dark"] select {
+    background-color: #1e293b;
+    color: var(--text-main);
 }
 
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: var(--bg-light);
-    color: var(--text-dark);
+    font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, sans-serif;
+    background-color: var(--bg-main);
+    color: var(--text-main);
     margin: 0;
     padding: 20px;
+    line-height: 1.6;
 }
 
-h1, h3 {
-    color: var(--primary-color);
+h1 {
+    color: var(--text-main);
     text-align: center;
+    font-weight: 800;
+    margin-bottom: 30px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+h3 {
+    color: var(--primary-color);
+    margin-bottom: 15px;
+    border-bottom: 2px solid var(--border-color);
+    padding-bottom: 5px;
 }
 
 /* Contenedor Principal */
 .container {
-    max-width: 1000px;
+    max-width: 1100px;
     margin: auto;
-    background: white;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    background: var(--bg-card);
+    padding: 30px;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-md);
 }
 
-/* Dashboard de Estadísticas */
+/* Puntos Extra: Dashboard de Estadísticas */
 .stats-container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
     gap: 15px;
     margin-bottom: 30px;
 }
 
 .stat-card {
-    background: var(--accent-color);
+    background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
     color: white;
-    padding: 15px;
-    border-radius: 8px;
+    padding: 20px 15px;
+    border-radius: var(--radius);
     text-align: center;
+    box-shadow: var(--shadow-sm);
+    transition: transform 0.2s;
 }
 
-/* Formularios */
-form {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-bottom: 25px;
-    background: #f9f9f9;
-    padding: 15px;
-    border-radius: 5px;
+.stat-card:hover {
+    transform: translateY(-3px);
 }
 
-input, select, button {
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-}
-
-button {
-    background-color: var(--accent-color);
+.stat-card h3 {
     color: white;
     border: none;
-    cursor: pointer;
-    transition: background 0.3s;
+    font-size: 0.9em;
+    margin: 0;
+    text-transform: uppercase;
 }
 
-button:hover {
-    background-color: var(--primary-color);
+.stat-card p {
+    font-size: 2.2em;
+    font-weight: bold;
+    margin: 10px 0 0 0;
 }
+
+/* Pestañas (Tabs) */
+.tabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 25px;
+    border-bottom: 2px solid var(--border-color);
+    padding-bottom: 10px;
+}
+
+.tab-btn {
+    background: transparent;
+    color: var(--text-main);
+    border: none;
+    padding: 10px 20px;
+    font-weight: 600;
+    font-size: 1em;
+    cursor: pointer;
+    border-radius: var(--radius) var(--radius) 0 0;
+    transition: all 0.3s;
+}
+
+.tab-btn:hover {
+    color: var(--primary-color);
+    background: var(--bg-main);
+}
+
+.tab-btn.active {
+    background: var(--primary-color);
+    color: white;
+}
+
+.tab-content { display: none; }
+.tab-content.active {
+    display: block;
+    animation: fadeIn 0.4s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(5px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Formularios y Filtros */
+form, .filtros {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 25px;
+    background: var(--bg-main);
+    padding: 20px;
+    border-radius: var(--radius);
+    border: 1px solid var(--border-color);
+}
+
+input, select {
+    flex: 1;
+    min-width: 150px;
+    padding: 10px 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    font-size: 0.95em;
+    transition: border-color 0.3s;
+}
+
+input:focus, select:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2);
+}
+
+button[type="submit"] {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s;
+    flex-grow: 1;
+}
+
+button[type="submit"]:hover { background-color: var(--primary-hover); }
 
 /* Tablas */
 table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 20px;
+    margin-top: 10px;
+    background: var(--bg-card);
 }
 
 th, td {
-    padding: 12px;
+    padding: 14px 12px;
     text-align: left;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid var(--border-color);
 }
 
 th {
     background-color: var(--secondary-color);
     color: white;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.85em;
+    letter-spacing: 0.5px;
 }
 
-tr:hover {
-    background-color: #f1f1f1;
-}
+tr:last-child td { border-bottom: none; }
+tr:hover { background-color: var(--bg-main); }
 
 /* Badges de Estado */
 .badge {
-    padding: 4px 8px;
-    border-radius: 12px;
-    font-size: 0.85em;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 0.8em;
     font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
-.bg-success { background: var(--success-color); color: white; }
-.bg-danger { background: var(--danger-color); color: white; }
-.bg-info { background: var(--info-color); color: white; }
-.bg-warning { background: #f1c40f; color: black; }
+.bg-success { background: rgba(16, 185, 129, 0.15); color: var(--success-color); border: 1px solid var(--success-color); }
+.bg-danger { background: rgba(239, 68, 68, 0.15); color: var(--danger-color); border: 1px solid var(--danger-color); }
+.bg-info { background: rgba(14, 165, 233, 0.15); color: var(--accent-color); border: 1px solid var(--accent-color); }
+.bg-warning { background: rgba(245, 158, 11, 0.15); color: var(--warning-color); border: 1px solid var(--warning-color); }
 
 /* Botones de acción en tabla */
 .btn-action {
-    padding: 5px 10px;
-    font-size: 0.8em;
-}
-
-/* Pestañas */
-.tabs {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 20px;
-    border-bottom: 2px solid #ddd;
-    padding-bottom: 10px;
-}
-.tab-btn {
-    background: transparent;
-    color: var(--primary-color);
-    border: 1px solid var(--accent-color);
-    padding: 10px 20px;
-}
-.tab-btn.active {
-    background: var(--accent-color);
+    padding: 6px 12px;
+    font-size: 0.85em;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: 5px;
+    background: var(--secondary-color);
     color: white;
-}
-.tab-content {
-    display: none;
-}
-.tab-content.active {
-    display: block;
+    transition: opacity 0.2s;
 }
 
-/* Dashboard Typography */
-.stat-card p {
-    font-size: 2em;
-    font-weight: bold;
-    margin: 10px 0;
-}
+.btn-action:hover { opacity: 0.8; }
+.btn-action.bg-danger { background: var(--danger-color); }

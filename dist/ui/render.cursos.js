@@ -19,12 +19,9 @@ export const renderCursos = (cursos) => {
                 </span>
             </td>
             <td>
-                <button class="btn-action toggle-curso" data-id="${curso.id}">
-                    Alternar Estado
-                </button>
-                <button class="btn-action bg-danger delete-curso" data-id="${curso.id}">
-                    Eliminar
-                </button>
+                <button class="btn-action edit-curso" data-id="${curso.id}">Editar</button>
+                <button class="btn-action toggle-curso" data-id="${curso.id}">Estado</button>
+                <button class="btn-action bg-danger delete-curso" data-id="${curso.id}">Eliminar</button>
             </td>
         </tr>
     `).join("");

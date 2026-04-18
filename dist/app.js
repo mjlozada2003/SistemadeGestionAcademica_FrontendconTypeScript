@@ -131,7 +131,7 @@ const renderAll = () => {
         // Si hay un ID, asume que es una edición (requiere que tengas el método update en CursoService)
         // Si no tienes método update en CursoService, elimina el if y deja solo curService.add(curData);
         if (idInput) {
-            // curService.update(parseInt(idInput), curData); // Descomenta si tienes método editar
+            curService.update(parseInt(idInput), curData); // Descomenta si tienes método editar
         }
         else {
             curService.add(curData); // REGISTRAR NUEVO
@@ -144,7 +144,7 @@ const renderAll = () => {
         alert(err.message); // Por si la sigla está duplicada
     }
 });
-// Delegación de eventos para la tabla cursos (Estado, Eliminar)
+// Delegación de eventos para la tabla cursos
 (_h = document.getElementById("tabla-cursos")) === null || _h === void 0 ? void 0 : _h.addEventListener("click", (e) => {
     const target = e.target;
     const id = Number(target.getAttribute("data-id"));
@@ -155,6 +155,16 @@ const renderAll = () => {
     else if (target.classList.contains("toggle-curso")) {
         curService.toggleEstado(id);
         renderAll();
+    }
+    else if (target.classList.contains("edit-curso")) { // <--- NUEVO BLOQUE
+        const cur = curService.getAll().find(c => c.id === id);
+        if (cur) {
+            document.getElementById("cur-id").value = cur.id.toString();
+            document.getElementById("cur-nombre").value = cur.nombre;
+            document.getElementById("cur-sigla").value = cur.sigla;
+            document.getElementById("cur-docente").value = cur.docente;
+            document.getElementById("cur-cupo").value = cur.cupoMaximo.toString();
+        }
     }
 });
 // ==========================================
@@ -219,3 +229,30 @@ document.querySelectorAll(".tab-btn").forEach(btn => {
 });
 // Inicio
 renderAll();
+// ==========================================
+// MODO OSCURO (DARK MODE)
+// ==========================================
+const btnTheme = document.getElementById("btn-theme");
+// 1. Revisar si el usuario ya tenía el modo oscuro guardado
+if (localStorage.getItem("theme") === "dark") {
+    document.body.setAttribute("data-theme", "dark");
+    if (btnTheme)
+        btnTheme.innerText = "☀️ Modo Claro";
+}
+// 2. Escuchar el clic en el botón
+btnTheme === null || btnTheme === void 0 ? void 0 : btnTheme.addEventListener("click", () => {
+    // Comprueba si actualmente está en modo oscuro
+    const isDark = document.body.getAttribute("data-theme") === "dark";
+    if (isDark) {
+        // Cambiar a Modo Claro
+        document.body.removeAttribute("data-theme");
+        localStorage.setItem("theme", "light");
+        btnTheme.innerText = "🌙 Modo Oscuro";
+    }
+    else {
+        // Cambiar a Modo Oscuro
+        document.body.setAttribute("data-theme", "dark");
+        localStorage.setItem("theme", "dark");
+        btnTheme.innerText = "☀️ Modo Claro";
+    }
+});

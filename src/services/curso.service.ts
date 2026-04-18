@@ -24,6 +24,14 @@ export class CursoService {
         this.cursos = this.cursos.filter(e => e.id !== id);
         this.save();
     }
+    
+    update(id: number, updated: Partial<Curso>): void {
+        const index = this.cursos.findIndex(c => c.id === id);
+        if (index !== -1) {
+            this.cursos[index] = { ...this.cursos[index], ...updated };
+            this.save();
+        }
+    }
 
     private save() { StorageUtil.save("cursos", this.cursos); }
 }

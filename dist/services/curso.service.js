@@ -21,5 +21,12 @@ export class CursoService {
         this.cursos = this.cursos.filter(e => e.id !== id);
         this.save();
     }
+    update(id, updated) {
+        const index = this.cursos.findIndex(c => c.id === id);
+        if (index !== -1) {
+            this.cursos[index] = Object.assign(Object.assign({}, this.cursos[index]), updated);
+            this.save();
+        }
+    }
     save() { StorageUtil.save("cursos", this.cursos); }
 }
